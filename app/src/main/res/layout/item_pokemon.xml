@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    android:id="@+id/carts"
+    app:cardUseCompatPadding="true">
 
-    <ImageView
-        android:id="@+id/item_pokemon_icon"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/black"/>
+    <LinearLayout
 
-    <TextView
-        android:id="@+id/item_pokemon_name"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/app_name"
-        android:textAllCaps="true"/>
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/item_pokemon_icon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/item_pokemon_id"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_horizontal"
+                android:text="#"
+                android:textAllCaps="true"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:id="@+id/item_pokemon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_horizontal"
+                android:text="@string/app_name"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

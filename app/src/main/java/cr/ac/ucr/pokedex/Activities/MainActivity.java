@@ -1,4 +1,4 @@
-package cr.ac.ucr.pokedex;
+package cr.ac.ucr.pokedex.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,7 +12,9 @@ import java.util.List;
 import cr.ac.ucr.pokedex.API.APIPokemon;
 import cr.ac.ucr.pokedex.Adapter.PokemonListAdapter;
 import cr.ac.ucr.pokedex.Model.Pokemon;
-import cr.ac.ucr.pokedex.Model.PokemonReponse;
+import cr.ac.ucr.pokedex.Model.ListPokemonReponse;
+import cr.ac.ucr.pokedex.Model.RetrofitSingleton;
+import cr.ac.ucr.pokedex.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         final GridLayoutManager layoutManager = new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -66,10 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        retrofit = RetrofitSingleton.getRetrofit();
         load = true;
         offset = 0;
         getPokemons(offset);
@@ -78,24 +78,24 @@ public class MainActivity extends AppCompatActivity {
     private void getPokemons(int offset){
 
         APIPokemon apiPokemon = retrofit.create(APIPokemon.class);
-        Call<PokemonReponse> call = apiPokemon.getPokemons(20,offset);
+        Call<ListPokemonReponse> call = apiPokemon.getPokemons(20,offset);
 
-        call.enqueue(new Callback<PokemonReponse>() {
+        call.enqueue(new Callback<ListPokemonReponse>() {
             @Override
-            public void onResponse(Call<PokemonReponse> call, Response<PokemonReponse> response) {
+            public void onResponse(Call<ListPokemonReponse> call, Response<ListPokemonReponse> response) {
                 load = true;
                 if(!response.isSuccessful()){
                     Log.e(TAG, " onResponse: "+response.errorBody());
                     return;
                 }
-                PokemonReponse poke = response.body();
+                ListPokemonReponse poke = response.body();
                 List<Pokemon> list = poke.getResults();
 
                 pokemonListAdapter.addListPokemons(list);
             }
 
             @Override
-            public void onFailure(Call<PokemonReponse> call, Throwable t) {
+            public void onFailure(Call<ListPokemonReponse> call, Throwable t) {
                 load = true;
                 Log.e(TAG, " onFailure: "+t.getMessage());
             }

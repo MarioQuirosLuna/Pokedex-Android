@@ -20,6 +20,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ItemPokemonViewHold
 
     private List<Pokemon> listPokemons;
     private Context context;
+    private Pokemon p;
 
     public PokemonListAdapter(Context context){
         this.listPokemons = new ArrayList<>();
@@ -36,7 +37,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ItemPokemonViewHold
 
     @Override
     public void onBindViewHolder(ItemPokemonViewHolder holder, int position) {
-        final Pokemon p = listPokemons.get(position);
+        p = listPokemons.get(position);
+        holder.idPokemon.setText(String.valueOf(p.getNumber()));
         holder.namePokemon.setText(p.getName());
 
         Glide.with(this.context)
@@ -44,6 +46,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ItemPokemonViewHold
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.iconPokemon);
+        holder.setOnClickListener();
     }
 
     @Override
@@ -55,4 +58,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ItemPokemonViewHold
         listPokemons.addAll(list);
         notifyDataSetChanged();
     }
+
+
 }
